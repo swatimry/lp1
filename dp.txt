@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+int dp(int n,int w,int wt[],int pf[]){
+    int dp[n+1][w+1];
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=w;j++){
+            if(i==0||j==0){
+                dp[i][j]=0;
+            }
+            else if(wt[i-1]<=j){
+                dp[i][j]=max(dp[i-1][j],pf[i-1]+dp[i-1][j-wt[i-1]]);
+
+            }
+            else{
+                dp[i][j]=dp[i-1][j];
+            }
+        }
+
+    }
+    return dp[n][w];
+}
+int main(){
+    int n,w;
+    cout<<"enter n"<<endl;
+    cin>>n;
+    cout<<"enter w"<<endl;
+    cin>>w;
+    int wt[n];
+    int pf[n];
+    for(int i=0;i<n;i++){
+        cout<<"enter w"<<i+1<<endl;
+        cin>>wt[i];
+        cout<<"enter profit"<<i+1<<endl;
+        cin>>pf[i];
+
+    }
+    cout<<dp(n,w,wt,pf);
+    return 0;
+}

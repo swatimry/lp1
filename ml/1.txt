@@ -1,0 +1,61 @@
+# Import pandas and dataset
+
+import pandas as pd
+df=pd.read_csv(r"C:\Users\ASUS\Downloads\Heart.csv")
+print(df)
+
+# Head 
+
+df.head()
+
+# tail
+
+df.tail()
+
+# Describe dataset
+
+df.describe()
+
+# Get keys
+
+df.keys()
+
+# Get Shape of Dataset
+
+df.shape
+
+# Datatypes of keys
+
+df.dtypes
+
+# Null values check
+
+df.isnull()
+
+df.isnull().sum()
+
+# Renaming columns
+
+df.rename(columns={'MaxHR':'newHR'},inplace=True)
+df.keys()
+
+# Masking/Replacing values
+
+df["AHD"].mask(df["AHD"]=="Yes",1,inplace=True)
+df["AHD"].mask(df["AHD"]=="No",0,inplace=True)
+df
+
+# Checking Zeroes
+
+df==0
+
+df[df==0].count()
+
+# Mean Calculation
+
+df["Age"].mean()
+
+help(df.mask)
+
+
+

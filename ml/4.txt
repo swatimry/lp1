@@ -1,0 +1,56 @@
+# Dataset Preparation
+
+import pandas as pd
+df=pd.read_csv(r"C:\Users\ASUS\Desktop\swati\Admission_Predict.csv")
+
+df.describe()
+
+df.shape
+
+df.isnull().sum()
+
+df["Admit_student(0/1)"]=[0 if each>0.8
+                       else 1
+                       for each in df["Chance of Admit "]]
+
+# Model Creation
+
+from sklearn.model_selection import train_test_split
+X=df[['GRE Score','TOEFL Score','CGPA','SOP',"LOR "]]
+Y=df['Admit_student(0/1)']
+
+xtrain,xtest,ytrain,ytest=train_test_split(X,Y,test_size=0.25)
+
+from sklearn.tree import DecisionTreeClassifier
+
+clf=DecisionTreeClassifier(max_depth=2)
+model=clf.fit(xtrain,ytrain)
+
+ypredict=model.predict(xtest)
+
+# Visualization of Tree
+
+#import matplotlib.pyplot as plt
+from sklearn.tree import plot_tree
+#plt.figure(figsize=(5,5))
+_=plot_tree(model)
+
+
+# Performance Evaluation
+
+from sklearn.metrics import confusion_matrix
+matrix=confusion_matrix(ytest,ypredict)
+print(matrix)
+
+from sklearn.metrics import accuracy_score , precision_score, recall_score
+accuracy=accuracy_score(ytest,ypredict)*100
+precision=precision_score(ytest,ypredict)*100
+recall=recall_score(ytest,ypredict)*100
+print("Accuracy:\t",accuracy,"\nPrecision:\t",precision,"\nRecall:\t\t",recall)
+
+from sklearn.metrics import classification_report
+report=classification_report(ytest,ypredict)
+print(report)
+
+
+
